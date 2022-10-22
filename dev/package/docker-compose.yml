@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  ##############################################################################
+  # rust
+  ##############################################################################
+  rust:
+    container_name: ${RUST_CONTAINER}
+    build:
+      context: ./docker/rust
+      network: host
+    ports:
+      - ${WEB_PORT}:80
+    volumes:
+      - ${SRC_PATH}:/var/www/html/
+    tty: true
