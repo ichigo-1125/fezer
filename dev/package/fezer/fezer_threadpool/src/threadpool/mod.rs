@@ -14,9 +14,11 @@
 
 */
 
+mod inner;
+
 use crate::atomic_counter::AtomicCounter;
 use crate::error::{ NewThreadPoolError, StartThreadsError, TryScheduleError };
-use crate::inner::Inner;
+use crate::threadpool::inner::Inner;
 
 use core::fmt::{ Debug, Formatter };
 use core::time::Duration;

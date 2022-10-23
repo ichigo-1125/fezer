@@ -14,6 +14,24 @@
     - `drop()` 時はスレッドがすべて停止するまではメインスレッドをスリープする
     - クロージャか `FnOnce` をスケジュールして、いずれかのスレッドで実行する
 
+    # 使用例
+
+    ```rust
+    let pool = fezer_threadpool::ThreadPool::new("worker", 5).unwrap();
+    let receiver =
+    {
+        let (sender, receiver) = std::sync::mpsc::channel();
+
+        for data in data_source
+        {
+            let sender_clone = sender.clone();
+            pool.schedule(move || process_data(data, sender_clone));
+        }
+        receiver
+    };
+    let results: Vec<ProcessResult> = receiver.iter().collect();
+    ```
+
     # TODO
 
     - 性能向上のため、ジョブのスケジューリングにワークスティーリングのキューを採用
@@ -24,5 +42,6 @@
 
 mod atomic_counter;
 mod error;
-mod inner;
-pub mod threadpool;
+mod threadpool;
+
+pub use threadpool::ThreadPool;
