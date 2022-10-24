@@ -41,7 +41,7 @@
 #![allow(dead_code)]
 
 mod atomic_counter;
-mod error;
 mod threadpool;
+pub mod error;
 
 pub use threadpool::ThreadPool;
